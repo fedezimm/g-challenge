@@ -1,4 +1,4 @@
-# DE Globant Challenge
+# DE G Challenge
 
 The project developed performs a migration of data from csv files (accesed via endpoints http, in my case they are in a blob storage account container that has public access)
 to db tables in a mysql db (with few changes -like new dependencies- it would accept also other database motors).
