@@ -29,24 +29,33 @@ Some libraries used were:
 ## How to run the project
 
 1. Make sure to install mysql server and to run it (In my case I run a docker image of mysqlserver). Make sure to install python 3 (In my case python 3.9).
+
+    To install mysqlserver using docker:
+    * Make sure you have docker installed.
+    * run ```docker pull mysql/mysql-server```
+    * run ```docker run -p 13306:3306 --name=[container-name] -eMYSQL_ROOT_PASSWORD=[password] -d [image_tag_name]```
+
+    With these commands mysql server will run on a container and it will be accesed by the machine on port 13306. From now you can connect to the mysql server running on the container using a client with the following access data:
+    * host: localhost.
+    * port: 13306.
+    * user: root.
+    * password: the one written in [password].
+
+
 2. Clone the repo and cd to the main folder. Run on the shell:
-```git clone https://github.com/fedezimm/g-challenge.git```
+```git clone https://github.com/fedezimm/g-challenge.git``` and
 ```cd g-challenge```
 3. Create a virtual environment named **.env** and activate it. Run on the shell:
-```virtualenv .env```
-```source .env/bin/activate```
-**(.env)** need to be displayed on shell. It indicates that you are running on the virtual environment just created.
+```virtualenv .env``` and ```source .env/bin/activate```. **(.env)** need to be displayed on shell. It indicates that you are running on the virtual environment just created.
 
 4. Install the requirements. Run on the shell:
-```pip install -r requirements.txt```
-The requirements will be installed on the virtual environment.
+```pip install -r requirements.txt```. The requirements will be installed on the virtual environment.
 
 5. Complete the config/config.ini file with the variables needed to:
 * Connect to the source cv files (paths).
-* Connect to the azure storage account to upload logging files (storage account connection string).
+* Connect to the azure storage account to upload logging files (storage account connection string). How to create a storage account on azure: https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal. To get the connection string: Go to Storage account -> Access keys, click on Show keys and copy the Connection string.
 * Connect to the database (db_connection_string, the format required is displayed on the config.ini file).
 
-6. Run the project. Run on the shell:
-```uvicorn main:app --reload```
-The service will be served on the next endpoint: http://127.0.0.1:8000. 
+1. Run the project. Run on the shell:
+```uvicorn main:app --reload```. The service will be served on the next endpoint: http://127.0.0.1:8000. 
 So you can open your browser and go to http://127.0.0.1:8000/migrate?table={table_name}&page_number={page_number}
