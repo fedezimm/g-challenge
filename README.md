@@ -19,3 +19,34 @@ The **table** parameter is needed and the allowed values are:
 * hired_employees
 
 The **page_number** parameter is by default 1.
+
+Some libraries used were:
+* pandas: to read the csv files as dataframes and iterate through them.
+* sqlalchemy: to insert each row in the tables of the database
+* azure-storage-blob: to insert the log files in the azure storage account container
+* fastapi: to implement the API Rest
+
+## How to run the project
+
+1. Make sure to install mysql server and to run it (In my case I run a docker image of mysqlserver). Make sure to install python 3 (In my case python 3.9).
+2. Clone the repo and cd to the main folder. Run on the shell:
+```git clone https://github.com/fedezimm/g-challenge.git```
+```cd g-challenge```
+3. Create a virtual environment named **.env** and activate it. Run on the shell:
+```virtualenv .env```
+```source .env/bin/activate```
+**(.env)** need to be displayed on shell. It indicates that you are running on the virtual environment just created.
+
+4. Install the requirements. Run on the shell:
+```pip install -r requirements.txt```
+The requirements will be installed on the virtual environment.
+
+5. Complete the config/config.ini file with the variables needed to:
+* Connect to the source cv files (paths).
+* Connect to the azure storage account to upload logging files (storage account connection string).
+* Connect to the database (db_connection_string, the format required is displayed on the config.ini file).
+
+6. Run the project. Run on the shell:
+```uvicorn main:app --reload```
+The service will be served on the next endpoint: http://127.0.0.1:8000. 
+So you can open your browser and go to http://127.0.0.1:8000/migrate?table={table_name}&page_number={page_number}
