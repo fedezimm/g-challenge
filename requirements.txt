@@ -2,4 +2,6 @@ sqlalchemy
 fastapi
 pandas
 uvicorn[standard]
-requests
+azure-storage-blob
+sqlalchemy-utils
+pymysql
