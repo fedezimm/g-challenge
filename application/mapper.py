@@ -102,6 +102,9 @@ class MostHiredDepartmentMapper(object):
     @staticmethod
     def to_definitions(most_hired_departments):
         return {
+            "metadata": {
+                "rows": len(most_hired_departments),
+            },
             "data": list(
                 map(MostHiredDepartmentMapper.to_definition, most_hired_departments)
             )
