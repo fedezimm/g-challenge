@@ -34,7 +34,7 @@ def migrate(table: str, page_number: int = 1):
 
 views = {
     'most_hired_departments': (MostHiredDepartmentRepository, MostHiredDepartmentMapper),
-    'department_job_quarter_count': (DepartmentJobQuarterCountRepository, DepartmentJobQuarterCountMapper)
+    'department_job_quarter_counts': (DepartmentJobQuarterCountRepository, DepartmentJobQuarterCountMapper)
 }
 
 @app.get('/views')

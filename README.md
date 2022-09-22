@@ -11,7 +11,9 @@ The response is a json with the metadata of the ingestion (page_number, total_pa
 
 It is also implemented the logging of each ingestion. It generates a log file (txt) and this is uploaded to an azure storage account (need to be configured)
 
-There is only one route (host/migrate?table='departments'&page_number=1). 
+These are the available endpoints: 
+* http://127.0.0.1:8000/migrate?table={table_name}&page_number={page_number})
+* http://127.0.0.1:8000/views?view={view_name}
 
 The **table** parameter is needed and the allowed values are:
 * departments
@@ -19,6 +21,10 @@ The **table** parameter is needed and the allowed values are:
 * hired_employees
 
 The **page_number** parameter is by default 1.
+
+The **view_name** parameter is needed and the allowed values are:
+* most_hired_departments
+* department_job_quarter_counts
 
 Some libraries used were:
 * pandas: to read the csv files as dataframes and iterate through them.
