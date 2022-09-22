@@ -11,7 +11,8 @@ class FileSource(Source):
         columns,
         type
     ):
-        Source.__init__(self, name, super_type = 'file')
+        Source.__init__(self, super_type = 'file')
+        self.name = name
         self.path = path
         self.type = type
         self.columns = columns

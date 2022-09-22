@@ -7,19 +7,26 @@ from context.model import Base
 class DBSource(Source):
     def __init__(
         self,
-        name,
-        db_table,
         conn_str
     ):
-        Source.__init__(self, name, super_type = 'db')
-        self.db_table = db_table
+        Source.__init__(self, super_type = 'db')
         self.conn_str = conn_str
         self.engine = create_engine(conn_str)
         if not database_exists(self.engine.url):
             create_database(self.engine.url)
         self.connection = self.engine.connect()
+        self.session = scoped_session(sessionmaker(bind=self.engine))
+    
+    def table(self, name, db_table):
+        self.name = name
+        self.db_table = db_table
         if not self.engine.dialect.has_table(self.connection, self.db_table.__tablename__):
             table_object = [Base.metadata.tables[self.db_table.__tablename__]]
             Base.metadata.create_all(self.engine, tables=table_object)
         self.session = scoped_session(sessionmaker(bind=self.engine))
+
+    def query(self, query):
+        results = self.connection.execute(query)
+        return results
+
 
