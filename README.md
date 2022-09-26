@@ -9,11 +9,13 @@ The rows are inserted only if they pass the asked data rules.
 
 The response is a json with the metadata of the ingestion (page_number, total_pages, rows_inserted, rows_with_error).
 
-It is also implemented the logging of each ingestion. It generates a log file (txt) and this is uploaded to an azure storage account (need to be configured)
+It is also implemented the logging of each ingestion. It generates a log file (txt) and this is uploaded to an azure storage account (need to be configured).
 
 These are the available endpoints: 
 * http://127.0.0.1:8000/migrate?table={table_name}&page_number={page_number})
 * http://127.0.0.1:8000/views?view={view_name}
+* http://127.0.0.1:8000/backup?table={table_name}
+* http://127.0.0.1:8000/restore?table={table_name}
 
 The **table** parameter is needed and the allowed values are:
 * departments
@@ -25,6 +27,10 @@ The **page_number** parameter is by default 1.
 The **view_name** parameter is needed and the allowed values are:
 * most_hired_departments
 * department_job_quarter_counts
+
+The backup route creates an avro file with the data on the table and store it in the file system (just the last backup) and it uploads to azure storage account (all the backups done).
+
+The restore route takes the last backup generated in the file system and restore the db table requested within.
 
 Some libraries used were:
 * pandas: to read the csv files as dataframes and iterate through them.
