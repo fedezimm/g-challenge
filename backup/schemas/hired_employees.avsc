@@ -1,0 +1,11 @@
+{"namespace": "backup.avro",
+ "type": "record",
+ "name": "HiredEmployees",
+ "fields": [
+     {"name": "id", "type": "int"},
+     {"name": "name",  "type": "string"},
+     {"name": "datetime",  "type": "string"},
+     {"name": "department_id",  "type": "int"},
+     {"name": "job_id",  "type": "int"}
+ ]
+}

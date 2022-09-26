@@ -59,5 +59,23 @@ class DepartmentRepository(object):
 
         return metadata
 
+    def restore(self):
+        
+        for row in self.df:
+            dept = Department(
+                id=row['id'],
+                department=row['department']
+            )
+            self.db_sink.session.add(dept)
+        error = None
+        try:
+            self.db_sink.session.commit()
+            response = {"data": f"Table {self.db_sink.db_table.__tablename__} restored successfully"}
+        except Exception as err:
+            error = err
+            self.db_sink.session.rollback()
+            response = f"Table {self.db_sink.db_table.__tablename__} restored not successfully due to error: {error.__cause__}"
+        return response, error
+
     
     

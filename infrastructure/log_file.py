@@ -34,3 +34,22 @@ class LogFile(object):
         self.open('rb')
         self.container.upload_blob(name=self.blob_name, data=self.file)
         self.close()
+
+class BackupFile(object):
+    def __init__(self, avro_file):
+        
+        self.avro_file = avro_file
+        self.connection_str = get_key("azure","AZURE_STORAGE_CONNECTION_STRING")
+        self.container_name = get_key("azure", "AZURE_STORAGE_CONTAINER_BACKUP")
+        self.file_name_temp = f'backup/temp_backup_{avro_file.name}.avro'
+        self.blob_service_client = BlobServiceClient.from_connection_string(self.connection_str)
+        container = self.blob_service_client.get_container_client(self.container_name)
+        if not container.exists():
+            container = self.blob_service_client.create_container(self.container_name)
+        self.container = container
+        self.blob_name = self.container_name + '/' + avro_file.name + '/' + str(datetime.now()) + '.avro'
+
+    def upload(self):
+        file = open(self.file_name_temp, 'rb')
+        self.container.upload_blob(name=self.blob_name, data=file)
+        file.close()

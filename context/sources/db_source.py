@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 from context.model import Base
+import pandas as pd
 
 class DBSource(Source):
     def __init__(
@@ -28,5 +29,11 @@ class DBSource(Source):
     def query(self, query):
         results = self.connection.execute(query)
         return results
+    
+    def to_df(self):
+        query= f"SELECT * FROM {self.db_table.__tablename__}"
+        #query = self.session.query(self.db_table.__tablename__)#.all()
+        df = pd.read_sql(query, self.engine)
+        return df
 
 

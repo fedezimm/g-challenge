@@ -1,5 +1,5 @@
 import json
-from context.sources.file_source import CsvFileSource
+from context.sources.file_source import AvroFileSource, CsvFileSource
 from context.sources.db_source import DBSource
 from context.model.department import Department
 from context.model.job import Job
@@ -46,6 +46,13 @@ class SourceMapper(object):
             conn_str
         )
         return db_sink
+    
+    def to_avro(self):
+        schema_path = f'./backup/schemas/{self.env}.avsc'
+        write_path = f'./backup/temp_backup_{self.env}.avro'
+        name = get_key(self.env, 'NAME')
+        avro_file = AvroFileSource(schema_path, write_path, name=name)
+        return avro_file
 
 class MetadataMapper(object):
     

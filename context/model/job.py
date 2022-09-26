@@ -59,3 +59,21 @@ class JobRepository(object):
         log_file.upload()
 
         return metadata
+
+    def restore(self):
+        
+        for row in self.df:
+            job = Job(
+                id=row['id'],
+                job=row['job']
+            )
+            self.db_sink.session.add(job)
+        error = None
+        try:
+            self.db_sink.session.commit()
+            response = {"data": f"Table {self.db_sink.db_table.__tablename__} restored successfully"}
+        except Exception as err:
+            error = err
+            self.db_sink.session.rollback()
+            response = f"Table {self.db_sink.db_table.__tablename__} restored not successfully due to error: {error.__cause__}"
+        return response, error
